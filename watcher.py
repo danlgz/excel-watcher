@@ -1,4 +1,5 @@
 from set_queue import SetQueue
+from excel_manager import ExcelManager
 import os, threading, time
 
 
@@ -6,9 +7,11 @@ class Watcher:
     folder_path = None
     is_watching = False
     files_queue = SetQueue()
+    manager = ExcelManager()
 
     def set_folder_path(self, path):
         self.folder_path = path
+        self.manager.set_base_path(self.folder_path)
 
     def _start_to_watch(self):
         before = dict([(f, None) for f in os.listdir(self.folder_path)])
@@ -18,7 +21,9 @@ class Watcher:
             after = dict([(f, None) for f in os.listdir(self.folder_path)])
             added = [f for f in after if not f in before]
             for file in added:
-                print('new file:', file)
+                if file in self.manager.folders:
+                    continue
+                print('new file:', self.folder_path, file)
                 self.files_queue.put(file)
             before = after
 
@@ -28,6 +33,7 @@ class Watcher:
                 break
             if self.files_queue.qsize() > 0:
                 file = self.files_queue.get()
+                self.manager.process(file)
                 processing_file_callback(file)
 
     def start(self, processing_file_callback=lambda f: f):
