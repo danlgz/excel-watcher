@@ -1,5 +1,4 @@
-import os
-import shutil
+import os, shutil, tkinter, tkinter.filedialog as filedialog
 
 def move_file(origin, destiny):
     create_directory(destiny)
@@ -9,3 +8,9 @@ def create_directory(file_path):
     directory = os.path.dirname(file_path)
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+def select_folder():
+    root = tkinter.Tk()
+    root.attributes("-topmost", True)
+    root.withdraw()
+    return filedialog.askdirectory()

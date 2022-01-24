@@ -47,6 +47,6 @@ class Watcher:
 
     def stop(self):
         if not self.is_watching:
-            print('Watcher not has started')
+            print('watcher not has started')
             return
         self.is_watching = False

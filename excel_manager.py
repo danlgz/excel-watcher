@@ -21,7 +21,7 @@ class ExcelManager:
 
     def process(self, file):
         if not self._base_path:
-            raise 'Base path is required'
+            raise 'base path is required'
 
         try:
             wb = load_workbook(self._get_absolute_path(file))

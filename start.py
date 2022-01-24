@@ -1,19 +1,13 @@
 import eel, random, tkinter, tkinter.filedialog as filedialog
 from watcher import Watcher
+from directory_helper import select_folder
 
 eel.init('web')
 watcher = Watcher()
 
 @eel.expose
-def py_random():
-    return random.random()
-
-@eel.expose
 def py_select_folder():
-    root = tkinter.Tk()
-    root.attributes("-topmost", True)
-    root.withdraw()
-    watcher.set_folder_path(filedialog.askdirectory())
+    watcher.set_folder_path(select_folder())
     eel.js_reload_dom()()
 
 @eel.expose
