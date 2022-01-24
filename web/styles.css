@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
+
+:root {
+    --primary-color: #a7a0db;
+    --secondary-color: #90b8e3;
+    --primary-text-color: #746da5;
+    --black-color: #424242;
+    --gray-color: #b5b5b5;
+    --disabled-color: #d1d1d1;
+    --disabled-text-color: #707070;
+    --transition: 150ms ease-in-out;
+}
+
+* {
+    font-family: sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    margin: 1rem 0;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.content > .title {
+    text-align: center;
+}
+
+/*folder */
+
+.content > .folder-container {
+    position: relative;
+}
+
+.content > .folder-container > .fa-folder {
+    font-size: 15rem;
+    color: var(--disabled-color);
+}
+
+.content > .folder-container.selected > .fa-folder {
+    color: var(--primary-color);
+}
+
+.content > .folder-container > .folder-status {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    color: var(--disabled-text-color);
+}
+
+.content > .folder-container.selected > .folder-status {
+    color: white;
+    box-sizing: border-box;
+    padding: 1rem;
+    overflow-wrap: break-word;
+}
+
+/*button*/
+.button {
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    box-shadow: 0 2px 1px var(--black-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.button.secondary {
+    background: var(--secondary-color);
+}
+
+.button > .text {
+    margin-left: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.button.disabled {
+    background: var(--disabled-color);
+    cursor: default;
+    box-shadow: 0 2px 1px var(--gray-color);
+}
+
+.button:not(.disabled):active {
+    opacity: .95;
+    box-shadow: 0 1px 1px var(--black-color);
+    transform: translateY(1px);
+}
+
+.button-group > .button {
+    margin: 0 5px;
+}
+
+.button-group > .button:first-child {
+    margin-left: 0;
+}
+.button-group > .button:last-child {
+    margin-right: 0;
+}
+
+/*status process*/
+.status-process {
+    padding: 2rem 0;
+    color: var(--black-color);
+}
