@@ -46,20 +46,27 @@ class ExcelManager:
         self._base_path = path
 
     def get_output_file(self):
+        created = False
         self._create_output_directory()
+
         if not is_file(self.output_file_path):
             create_directory(self.output_file_path)
             wb = Workbook()
             wb.save(self.output_file_path)
+            created = True
 
-        return load_workbook(self.output_file_path)
+        return load_workbook(self.output_file_path), created
 
     def sheets_copy(self, wb):
-        output = self.get_output_file()
+        output, created = self.get_output_file()
+        if created:
+            output.remove(output.worksheets[0])
+
         for sheet in _get_sheets(wb):
             output_sheet = output.create_sheet(title=sheet.title)
             for row_data in sheet.values:
                 output_sheet.append(row_data)
+
         output.save(self.output_file_path)
 
     def process(self, file):
