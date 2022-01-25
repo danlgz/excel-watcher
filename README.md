@@ -1,6 +1,6 @@
 # Excel Watcher
 ![alt text](./screenshot.png "screenshot")
-[Demo](https://www.google.com/)
+[video demo](https://www.loom.com/share/7bfad854e253476d8231e3c961fb0df4)
 
 ## Requirements
 * Python 3.8.
