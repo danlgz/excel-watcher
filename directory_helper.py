@@ -1,5 +1,9 @@
 import os, shutil, tkinter, tkinter.filedialog as filedialog
 
+
+def is_file(file):
+    return os.path.isfile(file)
+
 def move_file(origin, destiny):
     create_directory(destiny)
     shutil.move(origin, destiny)

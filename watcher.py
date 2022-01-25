@@ -8,6 +8,7 @@ class Watcher:
     is_watching = False
     files_queue = SetQueue()
     manager = ExcelManager()
+    _win_temp_file = 'Zone.Identifier'
 
     def set_folder_path(self, path):
         self.folder_path = path
@@ -21,9 +22,11 @@ class Watcher:
             after = dict([(f, None) for f in os.listdir(self.folder_path)])
             added = [f for f in after if not f in before]
             for file in added:
+                if self._win_temp_file in file:
+                    os.remove(f'{self.folder_path}/{file}')
+                    continue
                 if file in self.manager.folders:
                     continue
-                print('new file:', self.folder_path, file)
                 self.files_queue.put(file)
             before = after
 
@@ -33,8 +36,8 @@ class Watcher:
                 break
             if self.files_queue.qsize() > 0:
                 file = self.files_queue.get()
-                self.manager.process(file)
                 processing_file_callback(file)
+                self.manager.process(file)
 
     def start(self, processing_file_callback=lambda f: f):
         if self.folder_path is None:
