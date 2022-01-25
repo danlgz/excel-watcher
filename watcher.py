@@ -30,7 +30,9 @@ class Watcher:
                 self.files_queue.put(file)
             before = after
 
-    def _consume_the_queue(self, processing_file_callback=lambda f: f):
+    def _consume_the_queue(self,
+                           processing_file_callback=lambda f: f,
+                           queue_ended_callback=lambda: None):
         while True:
             if not self.is_watching and self.files_queue.qsize() == 0:
                 break
@@ -38,14 +40,20 @@ class Watcher:
                 file = self.files_queue.get()
                 processing_file_callback(file)
                 self.manager.process(file)
+                if self.files_queue.qsize() == 0:
+                    queue_ended_callback()
 
-    def start(self, processing_file_callback=lambda f: f):
+    def start(self,
+              processing_file_callback=lambda f: f,
+              queue_ended_callback=lambda: None):
         if self.folder_path is None:
             raise 'folder path is required'
         self.is_watching = True
         w = threading.Thread(target=self._start_to_watch)
         w.start()
-        p = threading.Thread(target=self._consume_the_queue, args=(processing_file_callback,))
+        p = threading.Thread(
+            target=self._consume_the_queue,
+            args=(processing_file_callback, queue_ended_callback))
         p.start()
 
     def stop(self):

@@ -16,7 +16,9 @@ def py_get_meta():
 
 @eel.expose
 def py_start_to_watch():
-    watcher.start(lambda f: eel.js_processing_file(f)())
+    watcher.start(
+        lambda f: eel.js_processing_file(f)(),
+        lambda: eel.js_queue_done()())
     eel.js_reload_dom()()
 
 @eel.expose

@@ -38,11 +38,13 @@ $folderSelectorBtn.addEventListener("click", function () {
 $watchBtn.addEventListener("click", function () {
     if (this.classList.contains('disabled')) return;
     eel.py_start_to_watch()();
+    $statusProcess.innerHTML = 'Waiting files...';
 });
 
 $stopToWatchBtn.addEventListener("click", function () {
     if (this.classList.contains('disabled')) return;
     eel.py_stop_to_watch()();
+    $statusProcess.innerHTML = '';
 })
 
 // functions to expose to python
@@ -54,6 +56,11 @@ function js_reload_dom() {
 eel.expose(js_processing_file);
 function js_processing_file(file) {
     $statusProcess.innerHTML = `processing: ${file}`;
+}
+
+eel.expose(js_queue_done);
+function js_queue_done() {
+    $statusProcess.innerHTML = 'Done!';
 }
 
 // constructor
